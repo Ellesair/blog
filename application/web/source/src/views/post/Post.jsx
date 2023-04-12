@@ -1,5 +1,5 @@
 import React from "react";
-import TextEditor from "../../components/TextEditor";
+import TextEditor from "../../components/texteditor/TextEditor";
 import "./post.css";
 
 function post() {
