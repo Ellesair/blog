@@ -1,4 +1,7 @@
 import React from "react";
+import { useState, useEffect, useRef } from "react";
+// import FontList from "./editoroptions/fontList.js";
+// import FontSize from "./editoroptions/fontSize.js";
 import "./textEditor.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,30 +9,34 @@ import {
   faItalic,
   faUnderline,
   faStrikethrough,
-  faListOl,
-  faListUl,
-  faAlignLeft,
-  faAlignCenter,
-  faAlignRight,
-  faAlignJustify,
-  faIndent,
-  faOutdent,
-  faRotateLeft,
-  faRotateRight,
   faLink,
   faImage,
 } from "@fortawesome/free-solid-svg-icons";
 
 function TextEditor() {
+  /////////=========>><<========///////////
+
+  const [editorTextInput, setEditorTextInput] = useState("");
+  const [highlightedText, setHighlightedText] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(editorTextInput);
+  };
+
+  useEffect(() => {
+    const editSelection = () => {
+      setHighlightedText(window.getSelection().toString());
+      
+    };
+    document.addEventListener('mouseup', editSelection)
+    console.log(highlightedText);
+  })
+
+  /////////=========>><<========///////////
   return (
     <div className="text-editor-container">
       <div className="options">
-        <button id="undo" className="text-format-button">
-          <FontAwesomeIcon icon={faRotateLeft} />
-        </button>
-        <button id="redo" className="text-format-button">
-          <FontAwesomeIcon icon={faRotateRight} />
-        </button>
         <button id="bold" className="text-format-button">
           <FontAwesomeIcon icon={faBold} />
         </button>
@@ -42,35 +49,12 @@ function TextEditor() {
         <button id="strikethrough" className="text-format-button">
           <FontAwesomeIcon icon={faStrikethrough} />
         </button>
-        <button id="ordered-list" className="text-format-button">
-          <FontAwesomeIcon icon={faListOl} />
-        </button>
-        <button id="unordered-list" className="text-format-button">
-          <FontAwesomeIcon icon={faListUl} />
-        </button>
+
         <button id="url-link" className="text-format-button">
           <FontAwesomeIcon icon={faLink} />
         </button>
-        <button id="img-link" className="text-format-button">
+        <button id="img-insert" className="text-format-button">
           <FontAwesomeIcon icon={faImage} />
-        </button>
-        <button id="align-left" className="text-format-button">
-          <FontAwesomeIcon icon={faAlignLeft} />
-        </button>
-        <button id="align-center" className="text-format-button">
-          <FontAwesomeIcon icon={faAlignCenter} />
-        </button>
-        <button id="align-right" className="text-format-button">
-          <FontAwesomeIcon icon={faAlignRight} />
-        </button>
-        <button id="alighn-justify" className="text-format-button">
-          <FontAwesomeIcon icon={faAlignJustify} />
-        </button>
-        <button id="indent" className="text-format-button">
-          <FontAwesomeIcon icon={faIndent} />
-        </button>
-        <button id="outdent" className="text-format-button">
-          <FontAwesomeIcon icon={faOutdent} />
         </button>
         <select id="h-options" className="format-dropdown">
           <option value="H1">H1</option>
@@ -80,14 +64,18 @@ function TextEditor() {
           <option value="H5">H5</option>
           <option value="H6">H6</option>
         </select>
-        <select id="font-name" className="format-dropdown"></select>
         <select id="font-size" className="format-dropdown"></select>
-        <div className="color-wrapper">
-          <input type="color" id="font-color" className="format-dropdown" />
-          <label for="font-color">Font Color</label>
-        </div>
       </div>
-      <div id="text-input" contenteditable="true"></div>
+      <div
+        id="text-input"
+        contentEditable="true"
+        value={editorTextInput}
+        onBlur={(e) => setEditorTextInput(e.currentTarget.innerHTML)}
+      ></div>
+      <div id="button-wrapper">
+        <button onClick={handleSubmit}>Submit</button>
+        <button>Cancel</button>
+      </div>
     </div>
   );
 }
