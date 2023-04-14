@@ -27,26 +27,38 @@ function TextEditor() {
   useEffect(() => {
     const editSelection = () => {
       setHighlightedText(window.getSelection().toString());
-      
     };
-    document.addEventListener('mouseup', editSelection)
+    document.addEventListener("mouseup", editSelection);
     console.log(highlightedText);
-  })
+  });
+
+  const styleText = (e) => {
+    let style = e.currentTarget.id;
+    document.execCommand(style);
+  };
 
   /////////=========>><<========///////////
   return (
     <div className="text-editor-container">
       <div className="options">
-        <button id="bold" className="text-format-button">
+        <button id="bold" className="text-format-button" onClick={styleText}>
           <FontAwesomeIcon icon={faBold} />
         </button>
-        <button id="italic" className="text-format-button">
+        <button id="italic" className="text-format-button" onClick={styleText}>
           <FontAwesomeIcon icon={faItalic} />
         </button>
-        <button id="underline" className="text-format-button">
+        <button
+          id="underline"
+          className="text-format-button"
+          onClick={styleText}
+        >
           <FontAwesomeIcon icon={faUnderline} />
         </button>
-        <button id="strikethrough" className="text-format-button">
+        <button
+          id="strikethrough"
+          className="text-format-button"
+          onClick={styleText}
+        >
           <FontAwesomeIcon icon={faStrikethrough} />
         </button>
 
